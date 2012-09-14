@@ -1,0 +1,10 @@
+{
+	"name": " underscore-template-precompile",
+	"version": "0.0.1",
+
+	"devDependencies": {
+		"requirejs": "*",
+		"underscore": "*",
+		"argsparser": "*"
+	}
+}
