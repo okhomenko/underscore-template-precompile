@@ -1,10 +1,26 @@
 {
-	"name": " underscore-template-precompile",
-	"version": "0.0.1",
+  "name": "underscore-template-compiler",
+  "description": "Compiler for _.template. Generates and write .js functions from .html templates",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com:okhomenko/underscore-template-precompile.git"
+  },
+  "keywords": [
+    "underscore",
+    "templates",
+    "compiler"
+  ],
+  "author": "Alex Khomenko",
+  "license": "BSD",
 
-	"devDependencies": {
-		"requirejs": "*",
-		"underscore": "*",
-		"argsparser": "*"
-	}
+  "devDependencies": {
+    "requirejs": "*",
+    "underscore": "*",
+    "argsparser": "*",
+    "chokidar": "*"
+  }
 }

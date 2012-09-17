@@ -7,7 +7,7 @@ __p+='<div class="mod modTemp modTempView1">\r\n\r\n\t<div class="hd">Template1<
 ( model.name )+
 '</li>\r\n\t\t\t';
  }); 
-;__p+='\r\n\r\n\t\t</ul>\r\n\t</div>\r\n\r\n</div>';
+;__p+='\r\n\r\n\t\t\t<h1>A</h1>\r\n\t\t</ul>\r\n\t</div>\r\n\r\n</div>';
 }
 return __p;
 }; });

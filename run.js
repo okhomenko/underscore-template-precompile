@@ -1,31 +1,50 @@
+'use strict';
+
 var fs = require('fs'),
-	Compiler = require('./lib/underscore.template.compiler').UnderscoreCompiler,
-	compiler = new Compiler();
+  argsparser = require('argsparser'),
+  chokidar = require('chokidar'),
+  UnderscoreTemplateCompiler = require('./lib/underscore.template.compiler').UnderscoreCompiler,
+  compiler = new UnderscoreTemplateCompiler();
 
 var compileFiles = function (files, inDir, outDir) {
-	var l = files.length,
-		file;
+  var l = files.length,
+    file;
 
-	while (l--) {
-		file = files[l];
-		compiler.main([inDir, file].join(''), [outDir, file, '.js'].join(''));
-	}
+  while (l--) {
+    file = files[l];
+    compiler.main([inDir, file].join(''), [outDir, file, '.js'].join(''));
+  }
 };
 
-var argsparser = require('argsparser'),
-	args = process.argv;
+var 
+  args = process.argv,
+  params = argsparser.parse(args),
+  inDir = params['-i'],
+  outDir = params['-o'],
+  watch = params['-w'],
+  inFile, outFile, filename,
+  watcher;
 
-var params = argsparser.parse(args);
+watcher = chokidar.watch(inDir, {ignored: /^\./, persistent: true});
 
-if (params['-i'] && params['-o']) {
-	var inDir = params['-i'],
-		outDir = params['-o'];
+watcher
+  .on('add', function (path) {
+    console.log('File ', path, ' has been added');
+    filename = path.substr(path.indexOf(inDir) + inDir.length + 1),
+    outFile = [outDir, '/', filename, '.js'].join('');
+    compiler.main(path, outFile);
+  })
+  .on('change', function (path) {
+    console.log('File ', path, ' has been changed');
+    filename = path.substr(path.indexOf(inDir) + inDir.length + 1),
+    outFile = [outDir, '/', filename, '.js'].join('');
+    compiler.main(path, outFile);
+  })
+  .on('unlink', function (path) {
+    console.log('File ', path, ' has been removed');
+  })
+  .on('error', function (error) {
+    console.error('Error happened: ', error);
+  });
 
-	fs.readdir(inDir, function (err, files) {
-		compileFiles(files, inDir + '/', outDir + '/');
-	});
-}
-else {
-	var files = args.slice(2);
-	compileFiles(files);
-}
+watcher.close();
