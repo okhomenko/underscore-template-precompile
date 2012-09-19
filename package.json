@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com:okhomenko/underscore-template-precompile.git"
+    "url": "github.com:okhomenko/underscore-template-compiler.git"
   },
   "keywords": [
     "underscore",
